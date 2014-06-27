@@ -6,7 +6,7 @@ module Simplefb
   
   class << self
     attr_accessor :app_id, :app_secret
-    attr_accessor :logger
+    attr_writer :logger
   end
   
   def self.logger
@@ -43,6 +43,7 @@ module Simplefb
   end
   
   def self.get_login_prompt_url(redirect_uri)
+    raise Error, 'No app ID provided' unless @app_id
     url="https://www.facebook.com/dialog/oauth?client_id=#{@app_id}&scope=public_profile,email,user_friends&redirect_uri=#{redirect_uri}"
     return url
   end
