@@ -26,7 +26,11 @@ module Simplefb
   def self.debug_token(access_token)
     logger.info "Debugging token"
     raise Error, "No Access Token Given" unless access_token
-    perform_request("https://graph.facebook.com/debug_token", :input_token=>access_token, :access_token=>app_access_token)
+    response=perform_request("https://graph.facebook.com/debug_token", :input_token=>access_token, :access_token=>app_access_token)
+    
+    # Parse Unix times for easier reading
+    %w(issued_at expires_at).each {|field| response['data'][field]=Time.at(response['data'][field])}
+    response
   end
   
   def self.get_access_token(code, redirect_uri)
