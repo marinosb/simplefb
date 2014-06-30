@@ -24,8 +24,10 @@ module Simplefb
 
       response=if options[:debug]
         Simplefb.debug_token(options[:access_token])
-      else
+      elsif options[:query]
         Simplefb.query_endpoint(options[:query], options[:access_token], Hash[*ARGV])
+      else
+        raise 'Argument combination not supported'
       end
 
       puts JSON.pretty_generate(response)
