@@ -5,6 +5,8 @@ module Simplefb
 
       Simplefb.app_id=ENV['FB_APP_ID']
       Simplefb.app_secret=ENV['FB_APP_SECRET']
+      
+      puts "Simplefb v#{Simplefb::VERSION} ID:#{ENV['FB_APP_ID']} SECRET:#{ENV['FB_APP_SECRET']}"
 
       options = {}
       OptionParser.new do |opts|
