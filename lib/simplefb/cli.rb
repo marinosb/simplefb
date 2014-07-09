@@ -10,7 +10,7 @@ module Simplefb
 
       options = {}
       OptionParser.new do |opts|
-        opts.banner = "Usage: simplefb [options]"
+        opts.banner = "Usage: FB_APP_ID=<app_id> FB_APP_SECRET=<app_secret> simplefb [options]"
   
         opts.on('-d', '--debug', 'Debug the facebook token provided') do |d|
           options[:debug] = d
