@@ -1,6 +1,23 @@
 # Simplefb
 
-TODO: Write a gem description
+A lightweight Ruby Gem and CLI for talking to the Facebook API
+
+## Gem Usage
+```ruby
+Simplefb.app_id='<YOUR_APP_ID>'
+Simplefb.app_secret='<YOUR_APP_SECRET>'
+Simplefb.logger=Rails::logger # optional - simplefb ships with a lightweight logger of its own
+
+debug_info=Simplefb.debug_token(token)
+user_info=Simplefb.query_endpoint '/me', token, fields: ['first_name', 'last_name', 'email', 'gender', 'friends', 'birthday']
+profile_pic=Simplefb.query_endpoint '/me/picture', token, redirect: :false, height: 100, width: 100 # style: :square
+```
+
+## CLI Usage
+```
+FB_APP_ID='<YOUR_APP_ID>' FB_APP_SECRET='<YOUR_APP_SECRET>' simplefb --debug --access_token '<ACCESS_TOKEN_TO_DEBUG>'
+FB_APP_ID='<YOUR_APP_ID>' FB_APP_SECRET='<YOUR_APP_SECRET>' simplefb --access_token '<ACCESS_TOKEN_TO_DEBUG>' /me/picture redirect false height 100 width 100 
+```
 
 ## Installation
 
@@ -16,9 +33,6 @@ Or install it yourself as:
 
     $ gem install simplefb
 
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
