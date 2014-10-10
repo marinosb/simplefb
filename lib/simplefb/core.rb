@@ -57,12 +57,22 @@ module Simplefb
   end
   
   # The token is actually sent back to the client as part of the URL Fragment. Therefore, it is not visible by the server
-  def self.get_token_login_prompt_url(redirect_uri)
+  def self.get_token_login_prompt_url(redirect_uri, permissions: [:public_profile, :email, :user_friends])
     raise Error, 'No app ID provided' unless @app_id
-    url="https://www.facebook.com/dialog/oauth?client_id=#{@app_id}&scope=public_profile,email,user_friends&response_type=token&redirect_uri=#{redirect_uri}"
+    url="https://www.facebook.com/dialog/oauth?client_id=#{@app_id}&scope=#{permissions.join(',')}&response_type=token&redirect_uri=#{redirect_uri}"
     return url
   end
   
+  # Facebook will redirect to the right scheme regardless, so no redirect_uri will be required
+  def self.get_app_login_prompt_url(permissions: [:public_profile, :email, :user_friends])
+    raise Error, 'No app ID provided' unless @app_id
+    "fbauth://authorize?client_id=#{@app_id}&scope=#{permissions.join(',')}&response_type=code"
+  end
+  
+  def self.get_mobile_web_login_prompt_url(permissions: [:public_profile, :email, :user_friends])
+    raise Error, 'No app ID provided' unless @app_id
+    "https://www.facebook.com/dialog/oauth?client_id=#{@app_id}&scope=#{permissions.join(',')}&response_type=token&redirect_uri=fb#{@app_id}://authorize"
+  end
   
   private
   
